@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pointing Mission Dashboard</title>
+<style>
+:root{color-scheme:dark;--bg:#090d12;--panel:#111821;--soft:#172332;--line:#263342;--text:#f4f7fb;--muted:#94a3b8;--red:#ef4444;--green:#6ee779;--blue:#7db7ff;--gold:#f3c64e;--ink:#dce7f3}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#071018 0%,#0b1118 48%,#090d12 100%);color:var(--text);font-family:Segoe UI,Microsoft JhengHei,Arial,sans-serif}main{max-width:1240px;margin:0 auto;padding:28px}.hero{padding:24px 0 18px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:18px}.eyebrow{display:block;color:#80d0ff;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}h1{font-size:34px;line-height:1.15;margin:0 0 8px}h2{font-size:18px;margin:0 0 14px}.muted,.sub{color:var(--muted);line-height:1.55;margin:0}.grid{display:grid;gap:14px}.cards{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:14px}.card,.panel{background:rgba(17,24,33,.92);border:1px solid rgba(148,163,184,.22);border-radius:8px;padding:17px;box-shadow:0 12px 34px rgba(0,0,0,.22)}.card{min-height:112px}.label{color:var(--muted);font-size:13px}.value{font-size:27px;font-weight:760;margin-top:8px;line-height:1.15}.pass{color:var(--green)}.two{grid-template-columns:minmax(0,.88fr) minmax(440px,1.12fr);align-items:stretch}.viewer-card{background:linear-gradient(135deg,rgba(18,31,43,.96),rgba(16,24,31,.92));position:relative;overflow:hidden}.viewer-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.viewer-meta span{border:1px solid rgba(125,183,255,.35);background:rgba(125,183,255,.08);padding:8px 10px;border-radius:999px;color:#d8ecff;font-size:13px}img,video{width:100%;border-radius:8px;border:1px solid var(--line);background:#05070a}table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-bottom:1px solid rgba(148,163,184,.18);padding:12px 8px;text-align:left}th{color:var(--muted);font-weight:600}.links{margin-top:14px}.links a{display:inline-block;color:#b8dcff;text-decoration:none;margin:6px 10px 0 0;border:1px solid rgba(125,183,255,.32);border-radius:999px;padding:8px 11px;background:rgba(125,183,255,.08)}.chart-panel{padding:12px}.chart-panel img{display:block}.chartBox{height:260px;border:1px solid rgba(148,163,184,.2);border-radius:8px;background:#0b1119;padding:12px}@media(max-width:900px){main{padding:18px}.cards,.two{grid-template-columns:1fr}.value{font-size:23px}h1{font-size:28px}}
+</style>
+</head>
+<body><main>
+<section class="hero">
+<span class="eyebrow">Satellite pointing mission</span>
+<h1>BK-2 to BK-1 Attitude Alignment</h1>
+<p class="sub">Judges whether the BK-2 body +X red axis points toward the BK-1 body. Edit the top block of <b>all_simulate_editable.m</b> to change TLE, ADCS columns, steady target, or output names.</p>
+</section>
+<section class="grid cards">
+<div class="card"><div class="label">Mission status</div><div class="value pass">PASS</div></div>
+<div class="card"><div class="label">Time to steady state</div><div class="value">74.0 s</div></div>
+<div class="card"><div class="label">Best pointing angle</div><div class="value">1.62 deg</div></div>
+<div class="card"><div class="label">Near-steady samples</div><div class="value">46%</div></div>
+</section>
+<section class="grid two">
+<div class="panel viewer-card"><span class="eyebrow">Interactive viewer</span><h2>MATLAB Earth Timeline</h2>
+<p class="muted">Open the script in normal MATLAB to use satelliteScenarioViewer with Earth, satellite models, play/pause, and a draggable time slider.</p>
+<div class="viewer-meta"><span>BK-2</span><span>BK-1</span><span>+X red axis</span></div>
+</div>
+<div class="panel"><h2>Mission Events</h2><table><tbody>
+<tr><th>Start descending</th><td>05-Aug-2026 22:47:20 UTC / 70.42 deg</td></tr>
+<tr><th>First steady entry</th><td>05-Aug-2026 22:48:34 UTC / 1.89 deg</td></tr>
+<tr><th>Angle drop to steady</th><td>68.53 deg</td></tr>
+<tr><th>Best pointing</th><td>05-Aug-2026 22:53:24 UTC / 1.62 deg</td></tr>
+<tr><th>Near-steady samples</th><td>25 / 54</td></tr>
+<tr><th>Average range</th><td>7775.5 km</td></tr>
+</tbody></table><div class="links">
+<a href="BK2_to_BK1_pointing_dashboard_data.csv">Angle data CSV</a>
+<a href="BK2_to_BK1_mission_summary.csv">Mission summary CSV</a>
+</div></div>
+</section>
+<section class="panel chart-panel" style="margin-top:14px"><h2>Pointing Angle Chart</h2>
+<img src="BK2_to_BK1_pointing_dashboard_chart.png" alt="Pointing chart">
+</section>
+<section class="panel" style="margin-top:14px"><h2>Quick Check Line</h2><div class="chartBox"><canvas id="quickChart"></canvas></div></section>
+<script>
+const times=["2026-08-05 22:46:38","2026-08-05 22:46:47","2026-08-05 22:46:55","2026-08-05 22:47:03","2026-08-05 22:47:11","2026-08-05 22:47:20","2026-08-05 22:47:36","2026-08-05 22:47:44","2026-08-05 22:47:53","2026-08-05 22:48:01","2026-08-05 22:48:09","2026-08-05 22:48:26","2026-08-05 22:48:34","2026-08-05 22:48:43","2026-08-05 22:48:51","2026-08-05 22:48:59","2026-08-05 22:49:16","2026-08-05 22:49:24","2026-08-05 22:49:32","2026-08-05 22:49:40","2026-08-05 22:49:49","2026-08-05 22:49:57","2026-08-05 22:50:05","2026-08-05 22:50:14","2026-08-05 22:50:22","2026-08-05 22:50:38","2026-08-05 22:50:47","2026-08-05 22:50:55","2026-08-05 22:51:03","2026-08-05 22:51:12","2026-08-05 22:51:21","2026-08-05 22:51:28","2026-08-05 22:51:36","2026-08-05 22:51:45","2026-08-05 22:51:53","2026-08-05 22:52:10","2026-08-05 22:52:18","2026-08-05 22:52:26","2026-08-05 22:52:34","2026-08-05 22:52:43","2026-08-05 22:52:51","2026-08-05 22:52:59","2026-08-05 22:53:08","2026-08-05 22:53:22","2026-08-05 22:53:24","2026-08-05 22:53:41","2026-08-05 22:53:49","2026-08-05 22:53:57","2026-08-05 22:54:06","2026-08-05 22:54:14","2026-08-05 22:54:31","2026-08-05 22:54:39","2026-08-05 22:54:47","2026-08-05 22:54:56"];
+const angles=[67.8168,68.3646,68.8499,69.3443,69.8421,70.4178,30.3826,16.2393,8.5992,4.8337,3.0341,2.0477,1.8886,1.8748,1.8309,1.7958,1.8122,1.8227,1.7980,1.7980,1.8457,1.8426,1.8188,1.8554,1.8576,1.7979,1.8402,1.8237,1.7879,1.8471,1.7828,1.7836,1.7518,1.7951,1.7719,1.7756,1.7203,1.7026,1.6845,1.7084,1.6788,1.6292,1.6781,1.6604,1.6207,32.8633,62.4144,80.6972,90.5411,95.5585,99.8486,100.7916,101.4913,102.0996];
+const steady=[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+const canvas=document.getElementById('quickChart');const ctx=canvas.getContext('2d');function draw(){const r=canvas.getBoundingClientRect();canvas.width=r.width*devicePixelRatio;canvas.height=r.height*devicePixelRatio;ctx.scale(devicePixelRatio,devicePixelRatio);const w=r.width,h=r.height,p=32;ctx.clearRect(0,0,w,h);const maxA=Math.max(...angles,110),minA=0;ctx.strokeStyle='#2f3946';ctx.lineWidth=1;for(let i=0;i<=5;i++){const y=p+(h-2*p)*i/5;ctx.beginPath();ctx.moveTo(p,y);ctx.lineTo(w-p,y);ctx.stroke()}function xy(i,a){return [p+(w-2*p)*i/(angles.length-1),h-p-(h-2*p)*(a-minA)/(maxA-minA)]}ctx.strokeStyle='#f04438';ctx.lineWidth=2;ctx.beginPath();angles.forEach((a,i)=>{const [x,y]=xy(i,a);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.fillStyle='#69e75d';steady.forEach((s,i)=>{if(s){const [x,y]=xy(i,angles[i]);ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill()}});ctx.fillStyle='#aab4c0';ctx.fillText('Angle (deg)',8,16);ctx.fillText(times[0]+' UTC',p,h-8);ctx.textAlign='right';ctx.fillText(times[times.length-1]+' UTC',w-p,h-8)}addEventListener('resize',draw);draw();
+</script>
+</main></body></html>
